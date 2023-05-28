@@ -1,10 +1,13 @@
 
 module.exports.chatSockets = function(socketServer){
     // let io = require('socket.io')(socketServer);
-
     let io = require('socket.io')(socketServer, {cors: {
         origin: "http://localhost:8000", 
-        methods: ["GET", "POST"]}});
+        methods: ["GET", "POST"],
+        allowedHeaders: ["content-type"],
+        transports: ['websocket', 'polling'],
+        credentials: true
+    }, allowEIO3: true});
 
     io.sockets.on('connection', function(socket){
         console.log('new connection received', socket.id);
